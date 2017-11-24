@@ -1,0 +1,56 @@
+---
+title: 'Data Visualization in R using ggplot2'
+author: '<div style = "text-align: left;"><font size="7">By <br> Avinash Prabhakaran</font></div>'
+date: "19/11/2017"
+output: 
+  ioslides_presentation:
+    widescreen: true
+    smaller: true
+    incremental: true
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(fig.align = "center")
+```
+
+```{r}
+library(tidyverse)
+library(forcats)
+library(gridExtra)
+library(knitr)
+
+library(tm)
+library(SnowballC)
+library(wordcloud)
+library(RColorBrewer)
+
+library(gapminder)
+library(gganimate)
+library(ggrepel)
+library(ggthemes)
+```
+<style>
+h2 {
+text-align: center;
+font-size: 150%;
+}
+
+.middle {
+text-align: center;
+}
+</style>
+
+
+## Directed Graphs - igraph
+<img src="fb.png" width = "100", height = "100", align = "left">
+<img src="twitter.png" width = "100", height = "100", align = "right">
+
+<div class = "middle"> 
+<img src="conn.png" width = "400", height = "400">
+<br>
+ <b>Source: http://kateto.net/netscix2016 </b>
+</div>

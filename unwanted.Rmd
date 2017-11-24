@@ -1,0 +1,140 @@
+---
+title: "Old"
+author: "Avinash"
+date: "22/11/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+ggplot(mpg, aes(displ, hwy)) + geom_point() +  
+  labs(title = "Displacement Vs Highway Mileage", x = "Displacement", y = "Highway Mileage") +
+  theme_bw()
+
+ggsave("disp_vs_hwy1.png")
+
+
+#To help us view the pattern - line of best fit
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  geom_smooth() +  
+  labs(title = "Displacement Vs Highway Mileage", x = "Displacement", y = "Highway Mileage") +
+  theme_bw()
+ggsave("disp_vs_hwy2.png")
+
+
+ggplot(mpg, aes(class, hwy)) +
+  geom_boxplot() +  
+  labs(title = "Class Vs Highway Mileage", x = "Class", y = "Highway Mileage")
+
+ggsave("boxplot.png")
+
+ggplot(mpg, aes(class, hwy)) +
+  geom_violin() + 
+  labs(title = "Class Vs Highway Mileage", x = "Class", y = "Highway Mileage")
+
+ggsave("violin_plot.png")
+
+
+ggplot(mpg, aes(class, hwy)) +
+  geom_violin() +
+  geom_jitter(alpha = 0.2) +  
+  labs(title = "Class Vs Highway Mileage", x = "Class", y = "Highway Mileage")
+
+ggsave("violin_jitter_plot.png")
+
+#aesthetic mapping - mapping class to color
+mpg %>% ggplot(aes(displ, hwy)) + 
+  geom_point(aes(fill=class), size = 5,alpha = 0.7, shape = 21) + 
+  geom_smooth(se = FALSE, color = "black") +
+  theme_bw() +  
+  labs(title = "Displacement Vs Highway Mileage", x = "Displacement", y = "Highway Mileage")
+
+ggsave("aes_map.png")
+
+mpg %>% ggplot(aes(displ, hwy)) + 
+  geom_point(aes(color = (class == "2seater")),size = 4,alpha = 0.7) + 
+  geom_smooth(aes(group = (class == "2seater"))) + 
+  scale_colour_discrete("Class",labels=c("Others", "2seater")) +
+  theme_bw()+ 
+  labs(title = "Displacement Vs Highway Mileage", x = "Displacement", y = "Highway Mileage")
+
+ggsave("2seater.png")
+
+```
+
+
+
+```{r}
+ggplot(mpg, aes(class, hwy)) +
+  geom_boxplot(aes(fill = class)) +  
+  labs(title = "Class Vs Highway Mileage", x = "Class", y = "Highway Mileage") + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5)) +scale_fill_brewer(palette = "Set2")
+
+ggplot(mpg, aes(class, hwy)) +
+  geom_violin(aes(fill = class)) + 
+  labs(title = "Class Vs Highway Mileage", x = "Class", y = "Highway Mileage") + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5)) + scale_fill_brewer(palette = "Set2") + geom_jitter(alpha = 0.3)
+
+```
+
+
+
+
+```{r}
+# gapminder::gapminder %>% 
+#     mutate(gdp = pop * gdpPercap) %>% 
+#     group_by(country) %>% 
+#     filter(year == max(year)) %>% 
+#     ggplot(aes(x = continent, y = gdp, fill = fct_reorder(country,gdp, .desc = TRUE))) + 
+#     geom_col(color = "black", size = 0.2) +
+#     guides(fill = FALSE) + 
+#     theme_bw()+
+#   scale_fill_manual(values = country_colors) + geom_label(aes(label = country ), color = "white",position =position_stack(vjust=1.15))
+
+geom_label(data = subset(gapminder, gdpPercap > 25000), aes(label = country), color = "white",position =position_stack(vjust=1.15))
+
+```
+
+## gganimate
+
+```{r}
+gapminder_plot <- ggplot(gapminder) +
+	aes(x = gdpPercap, y = lifeExp, colour = continent, size = pop,
+		frame = year) +
+	geom_point(alpha = 0.7) +
+	scale_x_log10() + theme_bw()
+
+gganimate(gapminder_plot)
+```
+
+
+
+## Facet Income per person Vs Life expectency by Continent
+
+```{r, fig.width=6, fig.height=4}
+
+circles <- gapminder %>% filter(continent != "Oceania") %>%
+  ggplot(aes(x = gdpPercap, y = lifeExp)) +
+  geom_point(aes(size = (pop), fill = country, frame = year), shape = 21, alpha = 0.9) +
+  guides(fill = FALSE, size = FALSE) +
+  facet_wrap(~continent) +
+  scale_fill_manual(values = country_colors) + 
+  scale_x_log10(limits = jXlim, labels = scales::dollar_format()) + ylim(jYlim) +
+  scale_size_continuous(range=c(1,35)) + 
+  coord_fixed(ratio = 1/43) + theme_bw() +
+  theme(strip.text = element_text(size = rel(1.1)))+
+  labs(title = "Income per person Vs Life expectency", x = "Income per person", y = "Life expectency")
+
+gganimate(circles)
+
+```
+
+
+
