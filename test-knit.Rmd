@@ -45,12 +45,22 @@ text-align: center;
 </style>
 
 
-## Directed Graphs - igraph
-<img src="fb.png" width = "100", height = "100", align = "left">
-<img src="twitter.png" width = "100", height = "100", align = "right">
+## Why ggplot2?
 
-<div class = "middle"> 
-<img src="conn.png" width = "400", height = "400">
-<br>
- <b>Source: http://kateto.net/netscix2016 </b>
-</div>
+### 1. Breaks graphs into semantics and components such as scales and layers
+
+### 2. Professional quality graphs
+
+### 3. Literate programming
+
+### 4. Modularity
+
+### 5. Easy superposition (Multiple Plots in a graph)
+
+### 3. Multiple color schemes + RColorBrewer
+
+### 6. Multiple themes + ggthemes
+
+### 5. Large number of extention libraries
+
+### More reasons why you should use ggplo2: https://github.com/tidyverse/ggplot2/wiki/Why-use-ggplot2

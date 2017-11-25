@@ -1,5 +1,5 @@
 ---
-title: "Data Visualization in R <br> using GGPlot2"
+title: "Data Visualization in R <br> using ggplot2"
 author: "Avinash Prabhakaran"
 date: "28/11/2017"
 output: 
@@ -43,19 +43,21 @@ font-size: 150%;
 text-align: center;
 }
 </style>
-<div class = "blurs">
+
 
 ## Overview of the Presentation
 
 ###1. Introduction to Data Visualization
 
-###2. Overview of the Gapminder Dataset
+###2. Introduction to ggplot
 
-###3. Exploration of GDP Per Capita
+###3. Overview of the Gapminder Dataset
 
-###4. Exploration of Life Expectency
+###4. Exploration of GDP Per Capita
 
-###5. Extention libraries to ggplot2
+###5. Exploration of Life Expectency
+
+###6. Extention libraries to ggplot2
 
 
 ## Data Science Project Workflow
@@ -94,29 +96,38 @@ wordcloud(words = d$word, freq = d$freq, min.freq = 1,
 ```
 
 
-## ggplot2
+## Introduction to ggplot2
 
-### ggplot2 is a data visualization package for the statistical programming language R.
+### 1. ggplot2 is a data visualization package for the statistical programming language `R`.
 
-### Created by Hadley Wickham in 2005
+### 2. Created by `Hadley Wickham` in 2005
 
-### Implementation of Leland Wilkinson's Grammar of Graphics
+### 3. Implementation of `Leland Wilkinson's Grammar of Graphics`
 
-### Convenience function -> `qplot`
+### 4. Easy plotting with `qplot` function
 
-### ggplot for python
+### 5. Complex plotting with `ggplot` function
+
+### 6. ggplot for python
+
+
 
 ## Why ggplot2?
 
-### 1. Breaks graphs into semantics and components such as scales and layers
+### 1. Free and open source
 
-### 2. Appearance
+### 2. Professional quality graphs
 
-### 3. Large set of color options
+### 3. Literate programming
 
-### 4. Modularity
+### 4. Easy superposition (Multiple Plots in a graph)
 
-### 5. Large number of extention libraries
+### 5. Multiple themes + ggthemes
+
+### 6. Large number of extention libraries
+
+
+### More reasons why you should use ggplo2: https://github.com/tidyverse/ggplot2/wiki/Why-use-ggplot2
 
 ## Gapminder - Dataset used for Exploration
 
