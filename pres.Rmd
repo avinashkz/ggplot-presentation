@@ -260,18 +260,34 @@ ggplot(subset(gapminder, year == 1987), aes(continent, lifeExp)) +
 ```
 
 
-## Americas Life Expectancy in 1952 & 2007
+
+## Life Expectancy Trend in Continents
+
+```{r, fig.width=10, fig.height=5}
+
+jXlim <- c(150, 115000)
+jYlim <- c(16, 100)
+
+ggplot(subset(gapminder, continent != "Oceania"),
+       aes(x = year, y = lifeExp, group = country, color = country)) +
+  geom_line(lwd = 1, show_guide = FALSE) + facet_wrap(~ continent) +
+  scale_color_manual(values = country_colors) +
+  labs(x = "Year", y = "Life Expectancy") +
+  theme_bw() + theme(strip.text = element_text(size = rel(1.1)))
+```
+
+## African Life Expectancy in 1952 & 2007
 
 ```{r, fig.width=10, fig.height=5}
 
 world<- map_data("world")
-gapminder_df1 <- gapminder %>% filter(continent == "Americas") %>% 
+gapminder_df1 <- gapminder %>% filter(continent == "Africa") %>% 
   mutate(code = countrycode::countrycode(country,"country.name", "iso2c"))
 world <- world %>% 
   mutate(code = countrycode::countrycode(region,"country.name", "iso2c"))
 df1 <- left_join(world, gapminder_df1, by = "code")
 
-df1 %>% filter(!is.na(gdpPercap), long < 0, year %in% c(1952, 2007)) %>%  ggplot() + 
+df1 %>% filter(!is.na(gdpPercap), year %in% c(1952, 2007)) %>%  ggplot() + 
   geom_polygon(aes(x = long, y = lat, group = group, fill = lifeExp)) +
   facet_wrap(~year, scales = "free")  +
   scale_fill_distiller("Life Expectancy", palette="RdYlGn", direction = 1) +
@@ -281,10 +297,11 @@ df1 %>% filter(!is.na(gdpPercap), long < 0, year %in% c(1952, 2007)) %>%  ggplot
         axis.ticks.y = element_blank(), axis.title.y = element_blank(), 
         strip.text = element_text(size = 12))
 
+
 ```
 
 
-## Life Expectance in Americas - Bar Plot
+## Change in Life Expectance in Africa - Bar Plot
 
 ```{r, fig.width=10, fig.height=5}
 
@@ -318,10 +335,32 @@ ggplot(subset(gapminder, country %in% jCountries),
   geom_line() + geom_point() + theme_bw() + 
   labs(x = "Year", y = "Life expectancy") +
   scale_color_brewer("Countries", palette = "Set1")
-gapminder %>% filter(year == 2007) %>% arrange(lifeExp)
+#gapminder %>% filter(year == 2007) %>% arrange(lifeExp)
 
 ```
 
+## Americas Life Expectancy in 1952 & 2007
+
+```{r, fig.width=10, fig.height=5}
+
+world<- map_data("world")
+gapminder_df1 <- gapminder %>% filter(continent == "Americas") %>% 
+  mutate(code = countrycode::countrycode(country,"country.name", "iso2c"))
+world <- world %>% 
+  mutate(code = countrycode::countrycode(region,"country.name", "iso2c"))
+df1 <- left_join(world, gapminder_df1, by = "code")
+
+df1 %>% filter(!is.na(gdpPercap), long < 0, year %in% c(1952, 2007)) %>%  ggplot() + 
+  geom_polygon(aes(x = long, y = lat, group = group, fill = lifeExp)) +
+  facet_wrap(~year, scales = "free")  +
+  scale_fill_distiller("Life Expectancy", palette="RdYlGn", direction = 1) +
+  theme_bw() +
+  theme(axis.text.x=element_blank(),axis.ticks.x = element_blank(),
+        axis.title.x = element_blank(), axis.text.y=element_blank(),
+        axis.ticks.y = element_blank(), axis.title.y = element_blank(), 
+        strip.text = element_text(size = 12))
+
+```
 
 ## Increase in Life Expectance in Americas - Polar Plot
 
@@ -340,21 +379,6 @@ inner_join(d1,d2 , by="country") %>%
   labs(x = "Country", y = "Years") + 
   coord_polar() + scale_fill_distiller("Years", palette="Purples", direction=1)
 
-```
-
-## Life Expectancy Trend in Continents
-
-```{r, fig.width=10, fig.height=5}
-
-jXlim <- c(150, 115000)
-jYlim <- c(16, 100)
-
-ggplot(subset(gapminder, continent != "Oceania"),
-       aes(x = year, y = lifeExp, group = country, color = country)) +
-  geom_line(lwd = 1, show_guide = FALSE) + facet_wrap(~ continent) +
-  scale_color_manual(values = country_colors) +
-  labs(x = "Year", y = "Life Expectancy") +
-  theme_bw() + theme(strip.text = element_text(size = rel(1.1)))
 ```
 
 
