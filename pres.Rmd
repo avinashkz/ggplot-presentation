@@ -42,8 +42,8 @@ font-size: 150%;
 .middle {
 text-align: center;
 }
-</style>
 
+</style>
 
 ## Overview of the Presentation
 
@@ -382,7 +382,7 @@ inner_join(d1,d2 , by="country") %>%
 ```
 
 
-## Income Per Person Vs Life Expectancy in 2007
+## GDP Per Capita Vs Life Expectancy in 2007
 
 ```{r, fig.width=10, fig.height=5}
 
@@ -395,12 +395,12 @@ gapminder %>% filter(continent != "Oceania", year == 2007) %>%
   scale_x_log10(limits = jXlim, labels = scales::dollar_format()) + ylim(jYlim) +
   scale_size_continuous(range=c(1,40)) +theme_bw() +
   theme(strip.text = element_text(size = rel(1.1))) + 
-  labs(x = "Income per person", y = "Life expectancy")
+  labs(x = "GDP Per Capita", y = "Life expectancy")
 
 ```
 
 
-## Income Per Person Vs Life Expectancy across years
+## GDP Per Capita Vs Life Expectancy across years
 
 ```{r, fig.width=10, fig.height=5}
 
@@ -413,7 +413,7 @@ gapminder %>% filter(continent != "Oceania", year %in% c(1952, 1967, 1992, 2007)
   scale_x_log10(limits = jXlim, labels = scales::dollar_format()) + ylim(jYlim) +
   scale_size_continuous(range=c(1,40)) + theme_bw() +
   theme(strip.text = element_text(size = rel(1.1)))+
-  labs(x = "Income per person", y = "Life expectancy")
+  labs(x = "GDP Per Capita", y = "Life expectancy")
 
 ```
 
