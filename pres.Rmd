@@ -48,10 +48,15 @@ text-align: center;
 ## Overview of the Presentation
 
 ###1. Introduction to Data Visualization
+
 ###2. Overview of the Gapminder Dataset
+
 ###3. Exploration of GDP Per Capita
+
 ###4. Exploration of Life Expectency
+
 ###5. Extention libraries to ggplot2
+
 
 ## Data Science Project Workflow
 
@@ -89,6 +94,29 @@ wordcloud(words = d$word, freq = d$freq, min.freq = 1,
 ```
 
 
+## ggplot2
+
+### ggplot2 is a data visualization package for the statistical programming language R.
+
+### Created by Hadley Wickham in 2005
+
+### Implementation of Leland Wilkinson's Grammar of Graphics
+
+### Convenience function -> `qplot`
+
+### ggplot for python
+
+## Why ggplot2?
+
+### 1. Breaks graphs into semantics and components such as scales and layers
+
+### 2. Appearance
+
+### 3. Large set of color options
+
+### 4. Modularity
+
+### 5. Large number of extention libraries
 
 ## Gapminder - Dataset used for Exploration
 
