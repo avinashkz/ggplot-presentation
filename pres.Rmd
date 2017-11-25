@@ -1,5 +1,5 @@
 ---
-title: "Data Visualization in R using GGPlot2"
+title: "Data Visualization in R <br> using GGPlot2"
 author: "Avinash Prabhakaran"
 date: "28/11/2017"
 output: 
@@ -43,6 +43,15 @@ font-size: 150%;
 text-align: center;
 }
 </style>
+<div class = "blurs">
+
+## Overview of the Presentation
+
+###1. Introduction to Data Visualization
+###2. Overview of the Gapminder Dataset
+###3. Exploration of GDP Per Capita
+###4. Exploration of Life Expectency
+###5. Extention libraries to ggplot2
 
 ## Data Science Project Workflow
 
@@ -81,13 +90,13 @@ wordcloud(words = d$word, freq = d$freq, min.freq = 1,
 
 
 
-## Gapminder Dataset
+## Gapminder - Dataset used for Exploration
 
 ```{r}
 kable(head(gapminder %>% filter(country == "Canada"),8))
 ```
 
-### Number of records in gapminder dataset = 1704
+### Sample dataframe from 1704 records of the Gapminder dataset.
 
 
 ## GDP Per Capita in 1987 - Boxplot
@@ -198,21 +207,23 @@ q1 <- gapminder %>% filter(country %in% my_countries, year == 2007)%>%
   mutate(gdp = pop * gdpPercap) %>%  select(continent, country, gdp)
 
 q2 <- gapminder %>% filter(country %!in% my_countries, year == 2007)%>% 
-  mutate(igdp = pop * gdpPercap) %>% group_by(continent) %>% summarise(gdp = sum(igdp), country = "Others")
+  mutate(igdp = pop * gdpPercap) %>% group_by(continent) %>% summarise(gdp = sum(igdp)) %>% mutate(country = paste("Rest of",continent))
 
-country_colors["Others"] <- "#3f3f3f"
+country_colors["Rest of Africa"] <- "#3f3f3f"
+country_colors["Rest of Americas"] <- "#3f3f3f"
+country_colors["Rest of Asia"] <- "#3f3f3f"
+country_colors["Rest of Europe"] <- "#3f3f3f"
 
 bind_rows(q2,q1) %>% ggplot(aes(x = continent, y = round(gdp/1000000000) , fill = fct_reorder(country,gdp, .desc = TRUE)))+ 
   geom_col(color = "black", size = 0.2) +
   guides(fill = FALSE) + 
   theme_dark+
   scale_fill_manual(values = country_colors) + 
-  geom_label(aes(label = country ), color = "white",position =position_stack(vjust=1), label.size = 0.15) +
+  geom_label(aes(label = country ), color = "white",position = position_stack(vjust=1), size = 3) +
   labs(x = "Continent" , y = "GDP in Trillions") + 
   scale_y_continuous(labels = scales::dollar_format())
 
 ```
-
 
 ## Life Expectency in 1987 - Violin Plot
 
@@ -294,8 +305,8 @@ inner_join(d1,d2 , by="country") %>%
   select(difference, country, continent.x) %>% 
   ggplot(aes(country)) + 
   geom_bar(aes(weight = difference, fill = difference)) +  theme_minimal() +
-  geom_label(aes(country, difference, label = round(difference,1)), size = 2) +
-  theme(axis.text.x=element_text(angle=0,hjust=0.5,vjust=0.5,size = 8), axis.text.y=element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank()) +
+  geom_label(aes(country, difference, label = round(difference,1)), size = 3, label.padding = unit(0.10, "lines")) +
+  theme(axis.text.x=element_text(angle=0,size = 9), axis.text.y=element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank()) +
   labs(x = "Country", y = "Years") + 
   coord_polar() + scale_fill_distiller("Years", palette="Purples", direction=1)
 
@@ -385,6 +396,7 @@ gapminder %>% filter(country == "Kuwait") %>% ggplot(aes(year, gdpPercap)) + geo
 gapminder %>% filter(country == "Kuwait") %>% ggplot(aes(year, lifeExp)) + geom_line(color = "gold2") + geom_point() +
   labs(x = "Year", y = "Life expectency") + theme_bw()
 ```
+
 
 ## Spatial Data - ggmap
 
