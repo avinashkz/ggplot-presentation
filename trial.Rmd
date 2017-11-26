@@ -45,7 +45,27 @@ font-size: 150%;
 text-align: center;
 }
 
+slides > slide.backdrop {
+  background: white;
+}
+
 </style>
 
+##Relationship between GDP Per Capita & Life Expectancy
+
+```{r, fig.width=10, fig.height=5}
 
 
+jXlim <- c(150, 115000)
+jYlim <- c(16, 100)
+
+gapminder %>% filter(continent != "Oceania") %>%
+  ggplot(aes(x = gdpPercap, y = lifeExp)) +
+  geom_point(aes(size = (pop), fill = country), shape = 21, alpha = 0.9) +
+  guides(fill = FALSE, size = FALSE) +
+  scale_fill_manual(values = country_colors) + 
+  scale_x_log10(limits = jXlim, labels = scales::dollar_format()) + ylim(jYlim) +
+  scale_size_continuous(range=c(1,10)) + theme_bw() +
+  theme(strip.text = element_text(size = rel(1.1)))+
+  labs(x = "GDP Per Capita", y = "Life expectancy") + geom_smooth(size = 2, method = "lm")
+```

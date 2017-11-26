@@ -53,16 +53,14 @@ text-align: center;
 
 ###3. Overview of the Gapminder Dataset
 
-###4. Exploration of GDP Per Capita
+###4. Visualizing Gapminder
 
-###5. Exploration of Life Expectancy
-
-###6. Extention libraries to ggplot2
+###5. Extention libraries to ggplot2
 
 
 ## Role of Data Visualization
 
-<img src = "data-science.jpg" width="850" height="360" align="centre" >
+<img src = "data-science.jpg" width="850" height="340" align="centre" >
 
 <b>Figure:</b> Data Science Project Workflow
 
@@ -127,10 +125,14 @@ wordcloud(words = d$word, freq = d$freq, min.freq = 1,
 
 ### 6. Large number of extention libraries
 
+## 7. Tidyverse - R packages for Data Science
+<div class="middle">
+<img src="tidyverse.png" width = "550", height = "400">
+<br>
+<b>Source: https://www.tidyverse.org</b>
+</div>
 
-### More reasons why you should use ggplo2: https://github.com/tidyverse/ggplot2/wiki/Why-use-ggplot2
-
-## Gapminder DatasFrame
+## Gapminder DataFrame
 
 ```{r}
 kable(head(gapminder %>% filter(country == "Canada"),8))
@@ -138,7 +140,10 @@ kable(head(gapminder %>% filter(country == "Canada"),8))
 
 ### Sample dataframe from 1704 records of the Gapminder dataset.
 
-## Now to Visualize Gapminder
+## Now to Visualize Gapminder ...
+<div class="middle">
+<img src="dviz.png" width = "1000", height = "400">
+</div>
 
 ## GDP Per Capita in 1987 - Boxplot
 
@@ -146,7 +151,7 @@ kable(head(gapminder %>% filter(country == "Canada"),8))
 ggplot(subset(gapminder, year == 1987, continent != "Oceania"), aes(continent, gdpPercap)) +
   geom_boxplot(aes(fill = continent)) +  
   labs(x = "Continent", y = "GDP Per Capita") + theme_bw() +
-  scale_fill_brewer("Continent", palette = "Set3") + scale_y_continuous(labels = scales::dollar_format())
+  scale_fill_brewer("Continent", palette = "Set1") + scale_y_continuous(labels = scales::dollar_format())
 ```
 
 ## GDP Per Capita in 1987 - Boxplot + Jitter Plot
@@ -155,13 +160,14 @@ ggplot(subset(gapminder, year == 1987, continent != "Oceania"), aes(continent, g
 ggplot(subset(gapminder, year == 1987, continent != "Oceania"), aes(continent, gdpPercap)) +
   geom_boxplot(aes(fill = continent)) +  
   labs(x = "Continent", y = "GDP Per Capita") + theme_bw() +
-  scale_fill_brewer("Continent", palette = "Set3") + geom_jitter(alpha = 0.3) + scale_y_continuous(labels = scales::dollar_format())
+  scale_fill_brewer("Continent", palette = "Set1") + geom_jitter(alpha = 0.4) + scale_y_continuous(labels = scales::dollar_format())
 ```
 
 
-##  Geographical plotting of GDP Per Capita in 1952
+## Geographical plotting of GDP Per Capita in 2007
 
 ```{r, fig.width=10, fig.height=5}
+
 
 world<- map_data("world")
 
@@ -173,16 +179,6 @@ world <- world %>%
 
 df <- left_join(world, gapminder_df, by = "code")
 
-
-df %>% 	ggplot() + geom_polygon(aes(x = long, y = lat, group = group, fill = gdpPercap)) +
-  scale_fill_distiller("GDP Per Capita", palette="RdYlGn", direction = 1, labels = scales::dollar_format()) +
-  labs(x = "Longitude", y = "Latitude") +
-  theme_void()
-```
-
-## Geographical plotting of GDP Per Capita in 2007
-
-```{r, fig.width=10, fig.height=5}
 gapminder_df7 <- gapminder %>% filter(year == 2007) %>% 
   mutate(code = countrycode::countrycode(country,"country.name", "iso2c"))
 
@@ -193,15 +189,6 @@ df7 %>%	ggplot() + geom_polygon(aes(x = long, y = lat, group = group, fill = gdp
   scale_fill_distiller("GDP Per Capita", palette="RdYlGn", direction = 1, labels = scales::dollar_format()) +
   labs(x = "Longitude", y = "Latitude") +
   theme_void()
-```
-
-## Polar Plot of The World Map
-
-```{r}
-df7 %>% 	ggplot() + geom_polygon(aes(x = long, y = lat, group = group, fill = gdpPercap)) + 
-  scale_fill_distiller("Life Expectancy", palette="RdYlGn", direction = 1) +
-  theme_minimal() + coord_polar(direction =  -1) + guides(fill = FALSE) + scale_x_continuous(breaks = c(-135,-45,45,135))  +
-  scale_y_continuous(breaks = seq(-90,90, by = 30)) + labs(x = "Longitude", y = "Latitude")
 ```
 
 
@@ -246,8 +233,7 @@ bind_rows(q2,q1) %>% ggplot(aes(x = continent, y = round(gdp/1000000000) , fill 
 ## Life Expectancy in 1987 - Violin Plot
 
 ```{r, fig.width=10, fig.height=5}
-ggplot(subset(gapminder, year == 1987), aes(continent, lifeExp)) +
-  geom_violin(aes(fill = continent), alpha = 0.7) +  
+gapminder %>% filter(continent != "Oceania", year == 1987) %>% droplevels() %>% ggplot(aes(continent, lifeExp)) + geom_violin(aes(fill = continent)) +  
   labs(x = "Continent", y = "Life Expetency") + theme_bw() +
   scale_fill_brewer("Continent", palette = "Set1")
 ```
@@ -256,14 +242,13 @@ ggplot(subset(gapminder, year == 1987), aes(continent, lifeExp)) +
 
 ```{r, fig.width=10, fig.height=5}
 ggplot(subset(gapminder, year == 1987), aes(continent, lifeExp)) +
-  geom_violin(aes(fill = continent), alpha = 0.7) +  
+  geom_violin(aes(fill = continent)) +  
   labs(x = "Continent", y = "Life Expectancy") + theme_bw() +
-  scale_fill_brewer("Continent", palette = "Set1") + geom_jitter(alpha = 0.3)
+  scale_fill_brewer("Continent", palette = "Set1") + geom_jitter(alpha = 0.4)
 ```
 
 
-
-## Life Expectancy Trend in Continents
+## Life Expectancy Trends in Continents
 
 ```{r, fig.width=10, fig.height=5}
 
@@ -317,7 +302,7 @@ inner_join(d1,d2 , by="country") %>%
   mutate(difference = life_2007 - life_1952) %>% 
   select(difference, country, continent.x) %>% 
   ggplot(aes(fct_reorder(country, difference, .desc = T))) + 
-  geom_bar(aes(weight = difference), fill = "dodgerblue3") +  theme_bw() +
+  geom_bar(aes(weight = difference), fill = "dodgerblue3", color = "black") +  theme_bw() +
   geom_label(aes(country, difference, label = round(difference,1))) +
   theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) +
   labs(x = "Country", y = "Years") + 
@@ -327,10 +312,9 @@ inner_join(d1,d2 , by="country") %>%
   
 ```
 
+## Life Expectancy Trend in Continents
 
-## Life Expectancy for Selected Countries
-```{r}
-
+```{r, fig.width=10, fig.height=5}
 jCountries <- c("Canada", "Rwanda", "Cambodia", "Swaziland","Mozambique")
 ggplot(subset(gapminder, country %in% jCountries),
        aes(x = year, y = lifeExp, color = reorder(country, -1 * lifeExp, max))) +
@@ -338,48 +322,20 @@ ggplot(subset(gapminder, country %in% jCountries),
   labs(x = "Year", y = "Life expectancy") +
   scale_color_brewer("Countries", palette = "Set1")
 #gapminder %>% filter(year == 2007) %>% arrange(lifeExp)
-
 ```
 
-## Americas Life Expectancy in 1952 & 2007
 
-```{r, fig.width=10, fig.height=5}
-
-world<- map_data("world")
-gapminder_df1 <- gapminder %>% filter(continent == "Americas") %>% 
-  mutate(code = countrycode::countrycode(country,"country.name", "iso2c"))
-world <- world %>% 
-  mutate(code = countrycode::countrycode(region,"country.name", "iso2c"))
-df1 <- left_join(world, gapminder_df1, by = "code")
-
-df1 %>% filter(!is.na(gdpPercap), long < 0, year %in% c(1952, 2007)) %>%  ggplot() + 
-  geom_polygon(aes(x = long, y = lat, group = group, fill = lifeExp)) +
-  facet_wrap(~year, scales = "free")  +
-  scale_fill_distiller("Life Expectancy", palette="RdYlGn", direction = 1) +
-  theme_bw() +
-  theme(axis.text.x=element_blank(),axis.ticks.x = element_blank(),
-        axis.title.x = element_blank(), axis.text.y=element_blank(),
-        axis.ticks.y = element_blank(), axis.title.y = element_blank(), 
-        strip.text = element_text(size = 12))
-
-```
-
-## Increase in Life Expectance in Americas - Polar Bar Plot
+## Life Expectancy in Africa in 2007 - Polar Bar Plot
 
 ```{r, fig.width=8, fig.height=6, message=FALSE, warning=FALSE, fig.align='center'}
+africas <- c("Mauritius","Swaziland","Mozambique","Zambia","Angola","Libya" ,"Lesotho","Angola","Zimbabwe", "Liberia","Rwanda","Morocco","Guinea-Bissau","South Africa","Cameroon","Tanzania","Kenya","Congo, Rep.","Eritrea","Ghana","Comoros","Egypt","Mauritania", "Madagascar", "Senegal")
 
-d1 <- gapminder %>% filter(continent == "Americas" , year == 1952) %>% mutate(life_1952 = lifeExp)
-d2 <- gapminder %>% filter(continent == "Americas" , year == 2007) %>% mutate(life_2007 = lifeExp)
-
-inner_join(d1,d2 , by="country") %>% 
-  mutate(difference = life_2007 - life_1952) %>% 
-  select(difference, country, continent.x) %>% 
-  ggplot(aes(country)) + 
-  geom_bar(aes(weight = difference, fill = difference)) +  theme_minimal() +
-  geom_label(aes(country, difference, label = round(difference,1)), size = 3, label.padding = unit(0.10, "lines")) +
+gapminder %>% filter(country %in% africas , year == 2007) %>% ggplot(aes(country)) + 
+  geom_bar(aes(weight = lifeExp, fill = lifeExp)) +  theme_minimal() +
+  geom_label(aes(country, lifeExp, label = round(lifeExp,1)), size = 3, label.padding = unit(0.10, "lines")) +
   theme(axis.text.x=element_text(angle=0,size = 9), axis.text.y=element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank()) +
   labs(x = "Country", y = "Years") + 
-  coord_polar() + scale_fill_distiller("Years", palette="Purples", direction=1)
+  coord_polar() + scale_fill_distiller("Years", palette="Reds", direction=1)
 
 ```
 
@@ -402,27 +358,9 @@ gapminder %>% filter(continent != "Oceania", year == 2007) %>%
 ```
 
 
-## GDP Per Capita Vs Life Expectancy across years
+## GDP Per Capita & Life Expectancy - Linear Model
 
 ```{r, fig.width=10, fig.height=5}
-
-gapminder %>% filter(continent != "Oceania", year %in% c(1952, 1967, 1992, 2007)) %>%
-  ggplot(aes(x = gdpPercap, y = lifeExp)) +
-  geom_point(aes(size = (pop), fill = country), shape = 21, alpha = 0.9) +
-  guides(fill = FALSE, size = FALSE) +
-  facet_wrap(~year) +
-  scale_fill_manual(values = country_colors) + 
-  scale_x_log10(limits = jXlim, labels = scales::dollar_format()) + ylim(jYlim) +
-  scale_size_continuous(range=c(1,40)) + theme_bw() +
-  theme(strip.text = element_text(size = rel(1.1)))+
-  labs(x = "GDP Per Capita", y = "Life expectancy")
-
-```
-
-
-##Relationship between GDP Per Capita & Life Expectancy
-
-```{r}
 
 
 jXlim <- c(150, 115000)
@@ -439,6 +377,25 @@ gapminder %>% filter(continent != "Oceania") %>%
   labs(x = "GDP Per Capita", y = "Life expectancy") + geom_smooth(size = 2, method = "lm")
 ```
 
+
+## GDP Per Capita & Life Expectancy - Non Linear Model
+
+```{r, fig.width=10, fig.height=5}
+
+
+jXlim <- c(150, 115000)
+jYlim <- c(16, 100)
+
+gapminder %>% filter(continent != "Oceania") %>%
+  ggplot(aes(x = gdpPercap, y = lifeExp)) +
+  geom_point(aes(size = (pop), fill = country), shape = 21, alpha = 0.9) +
+  guides(fill = FALSE, size = FALSE) +
+  scale_fill_manual(values = country_colors) + 
+  scale_x_log10(limits = jXlim, labels = scales::dollar_format()) + ylim(jYlim) +
+  scale_size_continuous(range=c(1,10)) + theme_bw() +
+  theme(strip.text = element_text(size = rel(1.1)))+
+  labs(x = "GDP Per Capita", y = "Life expectancy") + geom_smooth(size = 2)
+```
 
 ## Spatial Data - ggmap
 
