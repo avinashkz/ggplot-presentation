@@ -1,9 +1,11 @@
 ---
-title: "Data Visualization using ggplot2"
+title: "Presentation @ Microsoft"
 author: "Avinash Prabhakaran"
 date: "28/11/2017"
 output: 
   ioslides_presentation:
+    css: styles.css
+    logo: logo.png
     widescreen: true
     smaller: true
     incremental: true
@@ -45,6 +47,8 @@ text-align: center;
 
 </style>
 
+# Data Visualization Using ggplot2
+
 ## Overview of the Presentation
 
 ###1. Introduction to Data Visualization
@@ -55,7 +59,7 @@ text-align: center;
 
 ###4. Visualizing Gapminder
 
-###5. Extention libraries to ggplot2
+###5. Extension libraries to ggplot2
 
 
 ## Role of Data Visualization
@@ -91,7 +95,7 @@ d <- data.frame(word = names(v),freq=v)
 
 set.seed(1234)
 wordcloud(words = d$word, freq = d$freq, min.freq = 1,
-          random.order=FALSE, colors=brewer.pal(10, "Set2"))
+          random.order=FALSE, colors=brewer.pal(10, "Dark2"))
 ```
 
 
@@ -119,11 +123,11 @@ wordcloud(words = d$word, freq = d$freq, min.freq = 1,
 
 ### 3. Literate programming
 
-### 4. Easy superposition (Multiple Plots in a graph)
+### 4. Easy superpositioning (Multiple Plots in a graph)
 
 ### 5. Multiple themes + ggthemes
 
-### 6. Large number of extention libraries
+### 6. Large number of extension libraries
 
 ## 7. Tidyverse - R packages for Data Science
 <div class="middle">
@@ -140,10 +144,7 @@ kable(head(gapminder %>% filter(country == "Canada"),8))
 
 ### Sample dataframe from 1704 records of the Gapminder dataset.
 
-## Now to Visualize Gapminder ...
-<div class="middle">
-<img src="dviz.png" width = "1000", height = "400">
-</div>
+# Gapminder Visualizations
 
 ## GDP Per Capita in 1987 - Boxplot
 
@@ -234,7 +235,7 @@ bind_rows(q2,q1) %>% ggplot(aes(x = continent, y = round(gdp/1000000000) , fill 
 
 ```{r, fig.width=10, fig.height=5}
 gapminder %>% filter(continent != "Oceania", year == 1987) %>% droplevels() %>% ggplot(aes(continent, lifeExp)) + geom_violin(aes(fill = continent)) +  
-  labs(x = "Continent", y = "Life Expetency") + theme_bw() +
+  labs(x = "Continent", y = "Life Expectancy") + theme_bw() +
   scale_fill_brewer("Continent", palette = "Set1")
 ```
 
@@ -288,7 +289,7 @@ df1 %>% filter(!is.na(gdpPercap), year %in% c(1952, 2007)) %>%  ggplot() +
 ```
 
 
-## Change in Life Expectance in Africa - Bar Plot
+## Change in Life Expectancy in Africa - Bar Plot
 
 ```{r, fig.width=10, fig.height=5}
 
@@ -319,7 +320,7 @@ jCountries <- c("Canada", "Rwanda", "Cambodia", "Swaziland","Mozambique")
 ggplot(subset(gapminder, country %in% jCountries),
        aes(x = year, y = lifeExp, color = reorder(country, -1 * lifeExp, max))) +
   geom_line() + geom_point() + theme_bw() + 
-  labs(x = "Year", y = "Life expectancy") +
+  labs(x = "Year", y = "Life Expectancy") +
   scale_color_brewer("Countries", palette = "Set1")
 #gapminder %>% filter(year == 2007) %>% arrange(lifeExp)
 ```
@@ -394,8 +395,10 @@ gapminder %>% filter(continent != "Oceania") %>%
   scale_x_log10(limits = jXlim, labels = scales::dollar_format()) + ylim(jYlim) +
   scale_size_continuous(range=c(1,10)) + theme_bw() +
   theme(strip.text = element_text(size = rel(1.1)))+
-  labs(x = "GDP Per Capita", y = "Life expectancy") + geom_smooth(size = 2)
+  labs(x = "GDP Per Capita", y = "Life Expectancy") + geom_smooth(size = 2)
 ```
+
+# ggplot2 Extensions
 
 ## Spatial Data - ggmap
 
@@ -417,16 +420,13 @@ get_googlemap(center=c(-123.247985, 49.261263), zoom=16) %>%
     ylab("Latitude")
 ```
 
-## Directed Graphs - igraph
-
+## Network Graphs - ggnet2
 <img src="fb.png" width = "100", height = "100", align = "left">
-
 <img src="twitter.png" width = "100", height = "100", align = "right">
-
 <div class = "middle"> 
-<img src="conn.png" width = "400", height = "400">
+<img src="ggnet2.png" width = "600", height = "400">
 <br>
- <b>Source: http://kateto.net/netscix2016 </b>
+ <b>Source: https://briatte.github.io/ggnet/</b>
 </div>
 
 ```{r, fig.height=5, fig.width=6, fig.align='center', eval=FALSE}
@@ -437,36 +437,13 @@ dat <- make_graph(c("A","B",  "A","C",  "A","D",  "B","C",  "C","B"),
 plot(dat)
 ```
 
-## Network Graphs - ggnetowrk
-
-```{r, eval=FALSE}
-ggplot(n, aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_edges(aes(linetype = type), color = "grey75") +
-  geom_nodes(color = "gold", size = 8) +
-  geom_nodetext(aes(label = LETTERS[ vertex.names ])) +
-  geom_edgetext(aes(label = day), color = "white", fill = "grey25") +
-  theme_minimal() +
-  theme(axis.text = element_blank(),
-        axis.title = element_blank(),
-        panel.background = element_rect(fill = "grey25"),
-        panel.grid = element_blank())
-```
+## 3D Plots - Plotly R Library
 
 <div class = "middle"> 
-<img src="network.png" width = "650", height = "400", align = "middle">
-</div>
-<b>Source: </b>
+<img src="plotly.png" width = "550", height = "400", align = "middle">
 <br>
-<b>https://cran.r-project.org/web/packages/ggnetwork/vignettes/ggnetwork.html</b>
-
-
-## Network Graphs - ggnet2
-<div class = "middle"> 
-<img src="ggnet2.png" width = "500", height = "400", align = "centre">
-<br>
- <b>Source: https://briatte.github.io/ggnet/ </b>
+<b>Source: https://plot.ly/r/</b>
 </div>
-
 
 
 ## References

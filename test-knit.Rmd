@@ -4,6 +4,7 @@ author: '<div style = "text-align: left;"><font size="7">By <br> Avinash Prabhak
 date: "19/11/2017"
 output: 
   ioslides_presentation:
+    css: styles.css
     widescreen: true
     smaller: true
     incremental: true
@@ -33,17 +34,6 @@ library(gganimate)
 library(ggrepel)
 library(ggthemes)
 ```
-<style>
-h2 {
-text-align: center;
-font-size: 150%;
-}
-
-.middle {
-text-align: center;
-}
-</style>
-
 
 ## Why ggplot2?
 

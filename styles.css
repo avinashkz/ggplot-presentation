@@ -1,0 +1,17 @@
+h2 {
+text-align: center;
+font-size: 150%;
+}
+
+.middle {
+text-align: center;
+}
+
+#nextsteps {
+   color: blue;
+    background-color: aquamarine;
+}
+
+.emphasized {
+   font-size: 1.2em;
+}
