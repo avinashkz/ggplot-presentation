@@ -1,5 +1,5 @@
 ---
-title: "Data Visualization in R using GGPlot2"
+title: 'Data Visualization using GGPlot2'
 author: "Avinash"
 date: "19/11/2017"
 output: 
@@ -16,10 +16,8 @@ knitr::opts_chunk$set(message = FALSE)
 knitr::opts_chunk$set(warning = FALSE)
 knitr::opts_chunk$set(fig.align = "center")
 
-library(knitr)
-library(rgl)
-knit_hooks$set(webgl = hook_webgl)
 ```
+
 
 ```{r}
 library(tidyverse)
@@ -43,53 +41,11 @@ text-align: center;
 font-size: 150%;
 }
 
-.blues{
-background-color:"#E6E6FA";
+.middle {
+text-align: center;
 }
+
 </style>
 
-## Overview of the Presentation
-
-###1. Introduction to Data Visualization
-###2. Overview of the Gapminder Dataset
-###3. Exploration of GDP Per Capita
-###4. Exploration of Life Expectency
-###5. Extention libraries to ggplot2
 
 
-
-## Data Science Project Workflow
-
-
-
-<img src = "data-science.png" width="800" height="375" align="centre" >
-
-Source: http://r4ds.had.co.nz/introduction.html
-
-
-## Increase in Life Expectance in Americas - Polar Plot
-
-```{r, fig.width=8, fig.height=6, message=FALSE, warning=FALSE, fig.align='center'}
-
-d1 <- gapminder %>% filter(continent == "Americas" , year == 1952) %>% mutate(life_1952 = lifeExp)
-d2 <- gapminder %>% filter(continent == "Americas" , year == 2007) %>% mutate(life_2007 = lifeExp)
-
-inner_join(d1,d2 , by="country") %>% 
-  mutate(difference = life_2007 - life_1952) %>% 
-  select(difference, country, continent.x) %>% 
-  ggplot(aes(country)) + 
-  geom_bar(aes(weight = difference, fill = difference)) +  theme_minimal() +
-  geom_label(aes(country, difference, label = round(difference,1)), size = 3, label.padding = unit(0.10, "lines")) +
-  theme(axis.text.x=element_text(angle=0,size = 9), axis.text.y=element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank()) +
-  labs(x = "Country", y = "Years") + 
-  coord_polar() + scale_fill_distiller("Years", palette="Purples", direction=1)
-
-```
-
-
-```{r testgl, webgl=TRUE}
-x <- sort(rnorm(1000))
-y <- rnorm(1000)
-z <- rnorm(1000) + atan2(x,y)
-plot3d(x, y, z, col=rainbow(1000))
-```
