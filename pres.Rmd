@@ -9,7 +9,6 @@ output:
     widescreen: true
     smaller: true
     incremental: true
-
 ---
 
 ```{r setup, include=FALSE}
@@ -48,6 +47,18 @@ text-align: center;
 </style>
 
 # Data Visualization Using ggplot2
+
+
+## What is Data Visualization ?
+
+### It is the visual representation of data for:
+
+### 1. Decision making
+
+### 2. Communicating Information
+
+### 3. Understanding your data
+
 
 ## Overview of the Presentation
 
@@ -129,12 +140,6 @@ wordcloud(words = d$word, freq = d$freq, min.freq = 1,
 
 ### 6. Large number of extension libraries
 
-## 7. Tidyverse - R packages for Data Science
-<div class="middle">
-<img src="tidyverse.png" width = "550", height = "400">
-<br>
-<b>Source: https://www.tidyverse.org</b>
-</div>
 
 ## Gapminder DataFrame
 
@@ -264,6 +269,22 @@ ggplot(subset(gapminder, continent != "Oceania"),
   theme_bw() + theme(strip.text = element_text(size = rel(1.1)))
 ```
 
+
+## Life Expectancy in Africa in 2007 - Polar Bar Plot
+
+```{r, fig.width=8, fig.height=6, message=FALSE, warning=FALSE, fig.align='center'}
+africas <- c("Mauritius","Swaziland","Mozambique","Zambia","Angola","Libya" ,"Lesotho","Angola","Zimbabwe", "Liberia","Rwanda","Morocco","Guinea-Bissau","South Africa","Cameroon","Tanzania","Kenya","Congo, Rep.","Eritrea","Ghana","Comoros","Egypt","Mauritania", "Madagascar", "Senegal")
+
+gapminder %>% filter(country %in% africas , year == 2007) %>% ggplot(aes(country)) + 
+  geom_bar(aes(weight = lifeExp, fill = lifeExp)) +  theme_minimal() +
+  geom_label(aes(country, lifeExp, label = round(lifeExp,1)), size = 3, label.padding = unit(0.10, "lines")) +
+  theme(axis.text.x=element_text(angle=0,size = 9), axis.text.y=element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank()) +
+  labs(x = "Country", y = "Years") + 
+  coord_polar() + scale_fill_distiller("Years", palette="Reds", direction=1)
+
+```
+
+
 ## African Life Expectancy in 1952 & 2007
 
 ```{r, fig.width=10, fig.height=5}
@@ -326,19 +347,6 @@ ggplot(subset(gapminder, country %in% jCountries),
 ```
 
 
-## Life Expectancy in Africa in 2007 - Polar Bar Plot
-
-```{r, fig.width=8, fig.height=6, message=FALSE, warning=FALSE, fig.align='center'}
-africas <- c("Mauritius","Swaziland","Mozambique","Zambia","Angola","Libya" ,"Lesotho","Angola","Zimbabwe", "Liberia","Rwanda","Morocco","Guinea-Bissau","South Africa","Cameroon","Tanzania","Kenya","Congo, Rep.","Eritrea","Ghana","Comoros","Egypt","Mauritania", "Madagascar", "Senegal")
-
-gapminder %>% filter(country %in% africas , year == 2007) %>% ggplot(aes(country)) + 
-  geom_bar(aes(weight = lifeExp, fill = lifeExp)) +  theme_minimal() +
-  geom_label(aes(country, lifeExp, label = round(lifeExp,1)), size = 3, label.padding = unit(0.10, "lines")) +
-  theme(axis.text.x=element_text(angle=0,size = 9), axis.text.y=element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank()) +
-  labs(x = "Country", y = "Years") + 
-  coord_polar() + scale_fill_distiller("Years", palette="Reds", direction=1)
-
-```
 
 
 ## GDP Per Capita Vs Life Expectancy in 2007
@@ -448,10 +456,10 @@ plot(dat)
 
 ## References
 
-1. https://github.com/jennybc/ggplot2-tutorial
+[1] https://github.com/jennybc/ggplot2-tutorial
 
-2. https://medium.com/optima-blog/using-polar-coordinates-for-better-visualization-1d337b6c9dec
+[2] https://medium.com/optima-blog/using-polar-coordinates-for-better-visualization-1d337b6c9dec
 
-3. http://r4ds.had.co.nz
+[3] http://r4ds.had.co.nz
 
-4. http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
+[4] http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
